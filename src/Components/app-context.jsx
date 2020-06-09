@@ -1,5 +1,4 @@
 import React from 'react';
 
-export default class AppContext extends React.Component {
-
-}
+const AppContext = React.createContext('light');
+export default AppContext;
