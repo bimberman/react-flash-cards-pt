@@ -9,8 +9,12 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'create-card',
-      cards: []
+      view: 'view-cards',
+      cards: [
+        { question: 'What is?', answer: 'stuff' },
+        { question: 'Sports?', answer: 'Forever' },
+        { question: 'Everyday?', answer: 'I\'m shuffling' }
+      ]
     };
     this.setView = this.setView.bind(this);
     this.getView = this.getView.bind(this);
