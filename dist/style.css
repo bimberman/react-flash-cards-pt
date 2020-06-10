@@ -8,5 +8,5 @@ button:focus{
 }
 
 div{
-  transition: background-color 1s ease-out;
+  transition: background-color 0.5s ease-out;
 }

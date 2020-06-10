@@ -9,7 +9,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'review-cards',
+      view: 'view-cards',
       activeCard: {},
       cards: [
         { question: 'What is?', answer: 'stuff' },

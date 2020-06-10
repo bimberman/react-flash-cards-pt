@@ -6,36 +6,44 @@ export default class ReviewCards extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isQuestion: true
+      isQuestion: true,
+      cardIndex: 0
     };
     this.nextCard = this.nextCard.bind(this);
     this.previousCard = this.previousCard.bind(this);
     this.flipCard = this.flipCard.bind(this);
-    this.cardIndex = 0;
   }
 
   componentDidMount() {
-    if (this.context.cards.length) { this.context.setActiveCard(this.cardIndex); }
+    if (this.context.cards.length) { this.context.setActiveCard(this.state.cardIndex); }
   }
 
   nextCard() {
-    if (this.context.cards.length === this.cardIndex + 1) {
-      this.cardIndex = -1;
+    let localCardIndex = this.state.cardIndex;
+    if (this.context.cards.length === localCardIndex + 1) {
+      localCardIndex = -1;
     }
     if (this.context.cards.length) {
-      this.context.setActiveCard(++this.cardIndex);
+      this.context.setActiveCard(++localCardIndex);
     }
-    this.setState({ isQuestion: true });
+    this.setState({
+      isQuestion: true,
+      cardIndex: localCardIndex
+    });
   }
 
   previousCard() {
-    if (this.cardIndex === 0) {
-      this.cardIndex = this.context.cards.length;
+    let localCardIndex = this.state.cardIndex;
+    if (localCardIndex === 0) {
+      localCardIndex = this.context.cards.length;
     }
     if (this.context.cards.length) {
-      this.context.setActiveCard(--this.cardIndex);
+      this.context.setActiveCard(--localCardIndex);
     }
-    this.setState({ isQuestion: true });
+    this.setState({
+      isQuestion: true,
+      cardIndex: localCardIndex
+    });
   }
 
   flipCard() {
