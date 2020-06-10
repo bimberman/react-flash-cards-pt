@@ -1,0 +1,12 @@
+i, button{
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+button:focus{
+  outline: 0;
+}
+
+div{
+  transition: background-color 1s ease-out;
+}

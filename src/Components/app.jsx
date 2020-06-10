@@ -9,7 +9,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'view-cards',
+      view: 'review-cards',
+      activeCard: {},
       cards: [
         { question: 'What is?', answer: 'stuff' },
         { question: 'Sports?', answer: 'Forever' },
@@ -20,6 +21,11 @@ export default class App extends React.Component {
     this.getView = this.getView.bind(this);
     this.addCard = this.addCard.bind(this);
     this.saveCards = this.saveCards.bind(this);
+    this.setActiveCard = this.setActiveCard.bind(this);
+  }
+
+  setActiveCard(index) {
+    this.setState({ activeCard: this.state.cards[index] });
   }
 
   addCard(card) {
@@ -50,6 +56,8 @@ export default class App extends React.Component {
   render() {
     return (
       <AppContext.Provider value={{
+        setActiveCard: this.setActiveCard,
+        activeCard: this.state.activeCard,
         cards: this.state.cards,
         addCard: this.addCard
       }}>
