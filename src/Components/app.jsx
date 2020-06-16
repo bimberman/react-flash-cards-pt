@@ -4,6 +4,7 @@ import CreateCard from './create-card';
 import ReviewCards from './review-cards';
 import ViewCards from './view-cards';
 import Nav from './nav';
+import DeleteModal from './delete-modal';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -11,25 +12,34 @@ export default class App extends React.Component {
     this.state = {
       view: 'view-cards',
       activeCard: {},
-      cards: [
-        { question: 'What is?', answer: 'stuff' },
-        { question: 'Sports?', answer: 'Forever' },
-        { question: 'Everyday?', answer: 'I\'m shuffling' }
-      ]
+      modalIsOpen: false,
+      cards: this.props.cards
     };
     this.setView = this.setView.bind(this);
     this.getView = this.getView.bind(this);
     this.addCard = this.addCard.bind(this);
     this.saveCards = this.saveCards.bind(this);
     this.setActiveCard = this.setActiveCard.bind(this);
+    this.getViewStr = this.getViewStr.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.deleteCard = this.deleteCard.bind(this);
   }
 
   setActiveCard(index) {
-    this.setState({ activeCard: this.state.cards[index] });
+    this.setState(prevState => {
+      return { ...prevState, activeCard: this.state.cards[index] };
+    });
+  }
+
+  componentDidUpdate() {
+    this.saveCards();
   }
 
   addCard(card) {
-    this.setState({ cards: this.state.cards.concat([card]) });
+    this.setState(prevState => {
+      return { ...prevState, cards: this.state.cards.concat([card]) };
+    });
   }
 
   saveCards() {
@@ -53,17 +63,58 @@ export default class App extends React.Component {
     }
   }
 
+  getViewStr() {
+    return this.state.view;
+  }
+
+  openModal(id) {
+    const index = this.state.cards.findIndex(card => card.id === id);
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        activeCard: this.state.cards[index],
+        modalIsOpen: true
+      };
+    });
+  }
+
+  closeModal() {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        modalIsOpen: false
+      };
+    });
+  }
+
+  deleteCard(id) {
+    const index = this.state.cards.findIndex(card => card.id === id);
+    const cards = this.state.cards.filter((card, currentIndex) => currentIndex !== index);
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        cards: cards
+      };
+    });
+  }
+
   render() {
     return (
       <AppContext.Provider value={{
         setActiveCard: this.setActiveCard,
         activeCard: this.state.activeCard,
         cards: this.state.cards,
-        addCard: this.addCard
+        addCard: this.addCard,
+        openModal: this.openModal
       }}>
-        <div className="container">
-          <Nav setView={this.setView} getView={this.getView}/>
+        <div className="container col-12">
+          <Nav setView={this.setView} getViewStr={this.getViewStr}/>
           {this.getView()}
+          <DeleteModal
+            isOpen={this.state.modalIsOpen}
+            activeCard={this.state.activeCard}
+            deleteCard={this.deleteCard}
+            close={this.closeModal}/>
         </div>
       </AppContext.Provider>
     );
