@@ -5,7 +5,7 @@ export default class Nav extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeView: 'view-cards'
+      activeView: this.props.getViewStr()
     };
     this.handleClick = this.handleClick.bind(this);
   }

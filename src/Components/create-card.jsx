@@ -23,6 +23,7 @@ export default class CreateCard extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.context.addCard({
+      id: this.context.cards.length + 1,
       question: this.state.question,
       answer: this.state.answer
     });
@@ -70,13 +71,13 @@ export default class CreateCard extends React.Component {
             <div className="row d-flex justify-content-end mt-2 mr-0">
               <button
                 type="button"
-                className={'btn btn-outline-danger border-0 mr-2'}
+                className='btn btn-outline-danger border-0 mr-2'
                 onClick={this.handleReset}>
                     Cancel
               </button>
               <button
                 type="button"
-                className={'btn btn-outline-primary border-0'}
+                className='btn btn-outline-primary border-0'
                 onClick={this.handleSubmit}>
                     Save Card
               </button>
